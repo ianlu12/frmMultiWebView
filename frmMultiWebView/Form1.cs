@@ -41,8 +41,72 @@ namespace frmMultiWebView
             this.webView22.Height = viewHeight;
             var viewWidth = (this.Width - 25 * 2 - 5 * (2 - 1)) / 2;
             this.webView21.Width = viewWidth;
-            webView22.Left = this.webView21.Left + this.webView21.Width + 5;
+            webView22.Left = this.webView21.Right + 5;
             this.webView22.Width = viewWidth;
+            button3.Left = this.webView22.Left;
+            button4.Left = button3.Right + 5;
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            if (button1.Enabled)
+            {
+                await webView21.CoreWebView2.ExecuteScriptAsync(@"javascript:setInterval(function(){document.getElementsByClassName('css-1myfyhp')[0].children[1].click();},11000);");
+
+            }
+            button1.Enabled = false;
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            if (button3.Enabled)
+            {
+                await webView22.CoreWebView2.ExecuteScriptAsync(@"javascript:setInterval(function(){document.getElementsByClassName('css-1myfyhp')[0].children[1].click();},11000);");
+            }
+            button3.Enabled = false;
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            await webView21.CoreWebView2.ExecuteScriptAsync(@"javascript:localStorage.clear()");
+        }
+
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            await webView22.CoreWebView2.ExecuteScriptAsync(@"javascript:localStorage.clear()");
+        }
+
+        private void webView21_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (!button1.Enabled)
+            {
+                button1.Enabled = true;
+            }
+            
+        }
+
+        private void webView22_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (!button3.Enabled)
+            {
+                button3.Enabled = true;
+            }
+        }
+
+        private void webView22_SourceChanged(object sender, Microsoft.Web.WebView2.Core.CoreWebView2SourceChangedEventArgs e)
+        {
+            if (!button3.Enabled)
+            {
+                button3.Enabled = true;
+            }
+        }
+
+        private void webView21_SourceChanged(object sender, Microsoft.Web.WebView2.Core.CoreWebView2SourceChangedEventArgs e)
+        {
+            if (!button1.Enabled)
+            {
+                button1.Enabled = true;
+            }
         }
     }
 }
